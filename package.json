@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/jetiny/npm-install-tag#readme",
   "devDependencies": {
-    "service-xue": "latest",
     "commander": "^2.9.0",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
