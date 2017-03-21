@@ -1,0 +1,43 @@
+{
+  "name": "npm-install-tag",
+  "version": "1.0.0",
+  "description": "npm install with tag",
+  "main": "src/index.js",
+  "scripts": {
+    "prepare": "npm run build"
+  },
+  "bin": {
+    "npm-install-tag": "bin/npm-install-tag",
+    "nit": "bin/npm-install-tag"
+  },
+  "keywords": [
+    "npm",
+    "install",
+    "latest",
+    "tag",
+    "postinstall",
+    "version"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jetiny/npm-install-tag.git"
+  },
+  "author": {
+    "name": "jetiny",
+    "email": "86287344@qq.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jetiny/npm-install-tag/issues"
+  },
+  "homepage": "https://github.com/jetiny/npm-install-tag#readme",
+  "devDependencies": {
+    "service-xue": "latest",
+    "commander": "^2.9.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-json": "^2.1.0",
+    "rollup-plugin-node-resolve": "^2.0.0"
+  }
+}
