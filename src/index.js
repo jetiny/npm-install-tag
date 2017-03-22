@@ -84,7 +84,8 @@ try {
     args = process.env.NIT_NPM.split('').concat(args)
   }
   args.unshift('install')
-  streamResults('npm', args, {cwd: dirname(program.path)}, function (err, text) {
+  let cmd = process.platform === 'win32' ? 'npm.cmd' : 'npm'
+  streamResults(cmd, args, {cwd: dirname(program.path)}, function (err, text) {
     exitIfError(err)
     if (!program.override) {
       return
