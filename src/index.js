@@ -9,6 +9,7 @@ program
   .option('-p, --path [path]', 'package.json path default pwd')
   .option('-o, --override [override]', 'override package.json with resolved version')
   .option('-s, --strict [strict]', 'override package.json with resolved strict version')
+  .option('-a, --anylize [anylize]', 'parse packages from node_modules')
   .parse(process.argv)
 
 function exitIfError(err){
@@ -46,11 +47,39 @@ try {
         let value = list[name]
         if (value && !~value.indexOf('.')) {
           deps[name] = list
-          args.push(`${name}@${value}`)
+          if (program.anylize) {
+            let file = resolve(dirname(program.path), 'node_modules', name, 'package.json')
+            try {
+              let dep = JSON.parse(readFileSync(file))
+              value = (program.strict ? '' : '^') + dep.version
+              list[name] = value
+              args.push(`${name}@${value}`)
+            } catch (err) {
+              exitIfError(err)
+            }
+          } else {
+            args.push(`${name}@${value}`)
+          }
         }
       }
     }
   })
+  if (program.anylize) {
+    if (program.override) {
+      try {
+        writeFileSync(program.path, JSON.stringify(pkg, null, 2))
+        console.log(`overwrite ${program.path}`)
+      } catch (err) {
+        exitIfError(err)
+      }
+      process.exit(0)
+    } else {
+      args.forEach(function (str) {
+        console.log(str)
+      })
+      process.exit(0)
+    }
+  }
   if (process.env.NIT_NPM) {
     args = process.env.NIT_NPM.split('').concat(args)
   }
@@ -80,6 +109,10 @@ try {
   })
 } catch (err) {
   exitIfError(err)
+}
+
+function parsePackage (dir, name) {
+  let pkg = JSON.parse(resolve(program.path))
 }
 
 function streamResults(bin, args, opts, cb) {
