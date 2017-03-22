@@ -8,6 +8,7 @@ program
   .version(version)
   .option('-p, --path [path]', 'package.json path default pwd')
   .option('-o, --override [override]', 'override package.json with resolved version')
+  .option('-s, --strict [strict]', 'override package.json with resolved strict version')
   .parse(process.argv)
 
 function exitIfError(err){
@@ -19,7 +20,15 @@ function exitIfError(err){
 }
 
 program.path = resolve(program.path || '.', 'package.json')
-program.override = !!program.override
+program.override =  'override' in program ? (program.override || true) : false
+
+if (process.env.NIT_OVERRIDE) {
+  program.override = true
+}
+
+if (process.env.NIT_STRICT) {
+  program.strict = true
+}
 
 let fields = [
   'dependencies',
@@ -36,9 +45,7 @@ try {
       for (let name in list) {
         let value = list[name]
         if (value && !~value.indexOf('.')) {
-          deps[name] = {
-            name: list
-          }
+          deps[name] = list
           args.push(`${name}@${value}`)
         }
       }
@@ -62,7 +69,7 @@ try {
         let name = text.substr(0, pos)
         let value = text.substr(pos + 1, text.length)
         if (name in deps) {
-          deps[name][name] = value
+          deps[name][name] = (program.strict ? '' : '^') + value
         }
       }
       writeFileSync(program.path, JSON.stringify(pkg, null, 2))

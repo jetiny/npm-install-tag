@@ -1,6 +1,6 @@
 {
   "name": "npm-install-tag",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "npm install with tag",
   "main": "src/index.js",
   "scripts": {
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/jetiny/npm-install-tag#readme",
   "devDependencies": {
-    "commander": "^2.9.0",
+    "commander": "latest",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",

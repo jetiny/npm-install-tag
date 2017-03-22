@@ -36,4 +36,5 @@ add npm-install-tag to package.json
     -V, --version              output the version number
     -p, --path [path]          package.json path default pwd
     -o, --override [override]  override package.json with resolved version
+    -s, --strict [strict]      override package.json with resolved strict version
 ```
