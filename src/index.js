@@ -45,7 +45,7 @@ try {
       let list = pkg[key]
       for (let name in list) {
         let value = list[name]
-        if (value && !~value.indexOf('.')) {
+        if (value && /[a-zA-Z]/.test(value)) {
           deps[name] = list
           if (program.anylize) {
             let file = resolve(dirname(program.path), 'node_modules', name, 'package.json')
